@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import static android.os.SystemClock.sleep;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -25,6 +27,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
@@ -37,6 +40,7 @@ import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_ACCEL;
@@ -71,7 +75,13 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private TrajectoryFollower follower;
 
-    private DcMotorEx leftFront, leftRear, rightRear, rightFront;
+    public DcMotorEx leftFront;
+    public DcMotorEx leftRear;
+    public DcMotorEx rightRear;
+    public DcMotorEx rightFront;
+    private DcMotorEx braco1;
+    private DcMotorEx braco2;
+    private Servo servo1, servo2, servo3;
     private List<DcMotorEx> motors;
 
     private IMU imu;
@@ -104,6 +114,11 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear = hardwareMap.get(DcMotorEx.class, "backleft");
         rightRear = hardwareMap.get(DcMotorEx.class, "backright");
         rightFront = hardwareMap.get(DcMotorEx.class, "frontright");
+        braco1 = hardwareMap.get(DcMotorEx.class, "braco1");
+        braco2 = hardwareMap.get(DcMotorEx.class, "braco2");
+        servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo2 = hardwareMap.get(Servo.class, "servo2");
+        servo3 = hardwareMap.get(Servo.class, "servo3");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -118,6 +133,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        braco1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        braco2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
@@ -167,10 +184,55 @@ public class SampleMecanumDrive extends MecanumDrive {
         );
     }
 
+    public void garra(String direcao, int ticks, double power) {
+        braco1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        braco1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        braco2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        braco2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        if (Objects.equals(direcao, "cima")) {
+            braco1.setTargetPosition(ticks);
+            braco2.setTargetPosition(ticks);
+            braco1.setPower(0);
+            braco2.setPower(0);
+        } else if (Objects.equals(direcao, "baixo")) {
+            braco1.setTargetPosition(-ticks);
+            braco2.setTargetPosition(-ticks);
+            braco1.setPower(0);
+            braco2.setPower(0);
+
+        }
+
+        braco1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        braco2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        braco1.setPower(power);
+        braco2.setPower(power);
+
+        while (braco1.isBusy() && braco2.isBusy()) {
+            // Aguarde
+        }
+    }
     public void turn(double angle) {
         turnAsync(angle);
         waitForIdle();
     }
+
+    public void servo2(double t) {
+        servo2.setPosition(t);
+        sleep(1000);
+    }
+    public void servo3(double t) {
+        servo3.setPosition(t);
+        sleep(1000);
+    }
+    public void servo1(double t) {
+        servo1.setPosition(t);
+        sleep(2000);
+        servo1.setPosition(0.5);
+    }
+
+
 
     public void followTrajectoryAsync(Trajectory trajectory) {
         trajectorySequenceRunner.followTrajectorySequenceAsync(

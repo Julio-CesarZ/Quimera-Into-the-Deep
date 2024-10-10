@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@TeleOp(name = "Sagui_TeleOp")
-public class Sagui_TeleOp extends LinearOpMode {
+@TeleOp(name = "False_Solo")
+public class False_Solo extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -45,35 +45,41 @@ public class Sagui_TeleOp extends LinearOpMode {
                     )
             );
 
-            Y2 = gamepad2.right_stick_y;
+            if(gamepad1.right_stick_y != 0) {
+                Y2 = gamepad1.right_stick_y;
+            } else if (gamepad2.right_stick_y != 0) {
+                Y2 = gamepad2.right_stick_y;
+            } else {
+                Y2 = 0;
+            }
 
             braco1.setPower(Y2 * 0.7);
             braco2.setPower(Y2 * 0.7);
 
-            if(gamepad2.right_bumper) {
+            if(gamepad1.right_bumper || gamepad2.right_bumper) {
                 servo2.setPosition(0.23);
             }
 
-            if(gamepad2.left_bumper) {
+            if(gamepad1.left_bumper) {
                 servo2.setPosition(0);
             }
 
 
-            if(gamepad2.b) {
+            if(gamepad1.b || gamepad2.b) {
                 servo1.setPosition(1);
                 servo2.setPosition(0.23);
-            } else if(gamepad2.a) {
+            } else if(gamepad1.a) {
                 servo1.setPosition(0);
             } else {
                 servo1.setPosition(0.5);
             }
 
-            if(gamepad2.left_trigger > 0.3) {
+            if(gamepad1.left_trigger > 0.3 || gamepad2.left_trigger > 0.3) {
                 servo3.setPosition(0.22);
             }
 
-            if(gamepad2.right_trigger > 0.3) {
-                servo3.setPosition(0.6);
+            if(gamepad1.right_trigger > 0.3 || gamepad2.right_trigger > 0.3) {
+                servo3.setPosition(0.56);
             }
 
             drive.update();

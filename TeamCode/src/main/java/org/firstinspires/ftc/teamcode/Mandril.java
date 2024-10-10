@@ -22,8 +22,8 @@ public class Mandril extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-5.5, -30), Math.toRadians(0))
                 .build();
         Trajectory t2 = drive.trajectoryBuilder(t1.end())
-                .back(3)
-                .splineToConstantHeading(new Vector2d(43, -57), Math.toRadians(0))
+                .back(29)
+                .splineTo(new Vector2d(-45, -10), Math.toRadians(0))
                 .build();
 
         waitForStart();
@@ -31,7 +31,12 @@ public class Mandril extends LinearOpMode {
         if(isStopRequested()) return;
 
         drive.followTrajectory(t1);
+        drive.turn(Math.toRadians(-90));
         drive.followTrajectory(t2);
+
+
+
+        //drive.followTrajectory(estacionar);
 
 
     }
