@@ -38,7 +38,7 @@ public class RedLeftCesta extends LinearOpMode {
                 .build();
 
         Trajectory t5 = drive.trajectoryBuilder(t4.end())
-                .splineToLinearHeading(new Pose2d(-45, -8.5, Math.toRadians(90)), Math.toRadians(-100))
+                .splineToLinearHeading(new Pose2d(-43, -8.5, Math.toRadians(90)), Math.toRadians(-100))
                 .build();
 
         Trajectory t6 = drive.trajectoryBuilder(t5.end())
@@ -50,7 +50,7 @@ public class RedLeftCesta extends LinearOpMode {
                 .build();
 
         Trajectory t8 = drive.trajectoryBuilder(t7.end())
-                .lineTo(new Vector2d(-57.00, -10))
+                .lineTo(new Vector2d(-54, -10))
                 .build();
 
         Trajectory t9 = drive.trajectoryBuilder(t8.end())
@@ -58,8 +58,7 @@ public class RedLeftCesta extends LinearOpMode {
                 .build();
 
         Trajectory t10 = drive.trajectoryBuilder(t9.end())
-                .splineToLinearHeading(new Pose2d(-28, -5, Math.toRadians(180)), Math.toRadians(0))
-                //.splineTo(new Vector2d(-30, -1), Math.toRadians(64))
+                .splineToLinearHeading(new Pose2d(-25, -5, Math.toRadians(180)), Math.toRadians(0))
                 .build();
 
 
@@ -71,12 +70,12 @@ public class RedLeftCesta extends LinearOpMode {
 
         drive.followTrajectory(t1);
         drive.servo3(0.56);
-        drive.garra("cima",350,0.5);
+        drive.garra("cima",330,0.5);
         drive.followTrajectory(t2);
         drive.servo1(0);
         drive.followTrajectory(t3);
         drive.turnAsync(Math.toRadians(135));
-        drive.garra("baixo",300,0.5);
+        drive.garra("baixo",280,0.5);
         drive.servo3(0.22);
         drive.followTrajectory(t4);
         drive.followTrajectory(t5);

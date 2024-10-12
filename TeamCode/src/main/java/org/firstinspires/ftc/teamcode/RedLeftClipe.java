@@ -39,11 +39,12 @@ public class RedLeftClipe extends LinearOpMode {
                 .build();
 
         Trajectory t5 = drive.trajectoryBuilder(new Pose2d(-5,-33.5),Math.toRadians(90))
-                .splineToSplineHeading(new Pose2d(-50, -50, Math.toRadians(0)), Math.toRadians(0))
+                //.splineToSplineHeading(new Pose2d(-50, -50, Math.toRadians(0)), Math.toRadians(0))
+                .lineToSplineHeading(new Pose2d(-50, -50, Math.toRadians(0)))
                 .build();
 
         Trajectory t6 = drive.trajectoryBuilder(t5.end())
-                .splineTo(new Vector2d(-37.19, -14), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-37.19, -14), Math.toRadians(90))
                 .build();
 
         Trajectory t7 = drive.trajectoryBuilder(t6.end())
@@ -76,7 +77,7 @@ public class RedLeftClipe extends LinearOpMode {
         if(isStopRequested()) return;
 
         drive.followTrajectory(t1);
-        drive.garra("cima",290,0.5);
+        drive.garra("cima",270,0.5);
         drive.followTrajectory(t2);
         drive.garra("baixo",80, 1);
         drive.followTrajectory(t3);

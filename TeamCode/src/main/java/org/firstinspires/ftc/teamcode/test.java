@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-@Autonomous(name = "Red L 11 (Cesta)")
+@Autonomous(name = "test")
 public class test extends LinearOpMode {
     @Override
     public void runOpMode() {

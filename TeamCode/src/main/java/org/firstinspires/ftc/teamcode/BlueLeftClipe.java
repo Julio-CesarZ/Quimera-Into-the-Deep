@@ -27,7 +27,7 @@ public class BlueLeftClipe extends LinearOpMode {
                 .build();
 
         Trajectory t2 = drive.trajectoryBuilder(t1.end())
-                .forward(8)
+                .forward(10)
                 .build();
 
         Trajectory t3 = drive.trajectoryBuilder(t1.end())
@@ -38,12 +38,12 @@ public class BlueLeftClipe extends LinearOpMode {
                 .back(10)
                 .build();
 
-        Trajectory t5 = drive.trajectoryBuilder(new Pose2d(5,33.5),Math.toRadians(-90))
-                .splineToSplineHeading(new Pose2d(50, 50, Math.toRadians(180)), Math.toRadians(0))
+        Trajectory t5 = drive.trajectoryBuilder(new Pose2d(5,34), Math.toRadians(-90))
+                .lineToSplineHeading(new Pose2d(50, 50, Math.toRadians(180)))
                 .build();
 
         Trajectory t6 = drive.trajectoryBuilder(t5.end())
-                .splineToSplineHeading(new Pose2d(37.19, 14, Math.toRadians(180)), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(36, 14), Math.toRadians(-90))
                 .build();
 
         Trajectory t7 = drive.trajectoryBuilder(t6.end())
@@ -67,7 +67,7 @@ public class BlueLeftClipe extends LinearOpMode {
                 .build();
 
         Trajectory t12 = drive.trajectoryBuilder(t11.end())
-                .splineToLinearHeading(new Pose2d(28, 5, Math.toRadians(0)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(25, 5, Math.toRadians(0)), Math.toRadians(180))
                 //.splineTo(new Vector2d(-30, -1), Math.toRadians(64))
                 .build();
 
@@ -76,7 +76,7 @@ public class BlueLeftClipe extends LinearOpMode {
         if(isStopRequested()) return;
 
         drive.followTrajectory(t1);
-        drive.garra("cima",290,0.5);
+        drive.garra("cima",270,0.5);
         drive.followTrajectory(t2);
         drive.garra("baixo",80, 1);
         drive.followTrajectory(t3);
