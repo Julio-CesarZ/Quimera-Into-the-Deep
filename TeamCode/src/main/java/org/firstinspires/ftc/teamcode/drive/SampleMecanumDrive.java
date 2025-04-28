@@ -114,11 +114,11 @@ public class SampleMecanumDrive extends MecanumDrive {
         leftRear = hardwareMap.get(DcMotorEx.class, "backleft");
         rightRear = hardwareMap.get(DcMotorEx.class, "backright");
         rightFront = hardwareMap.get(DcMotorEx.class, "frontright");
-        braco1 = hardwareMap.get(DcMotorEx.class, "braco1");
-        braco2 = hardwareMap.get(DcMotorEx.class, "braco2");
-        servo1 = hardwareMap.get(Servo.class, "servo1");
-        servo2 = hardwareMap.get(Servo.class, "servo2");
-        servo3 = hardwareMap.get(Servo.class, "servo3");
+        //braco1 = hardwareMap.get(DcMotorEx.class, "braco1");
+        //braco2 = hardwareMap.get(DcMotorEx.class, "braco2");
+        //servo1 = hardwareMap.get(Servo.class, "servo1");
+        //servo2 = hardwareMap.get(Servo.class, "servo2");
+        //servo3 = hardwareMap.get(Servo.class, "servo3");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -133,8 +133,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        braco1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        braco2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //braco1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //braco2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
